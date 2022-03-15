@@ -1,7 +1,7 @@
 /*
  * Implementation of a two way messaging client in Java
  * By Srihari Nelakuditi for CSCE 416
- * Modified by Lauren Hodges for CSCE 416 group messaging client
+ * Modified by Lauren Hodges for CSCE 416 Group Messaging Client
  */
 
 // Package for socket related stuff
@@ -35,7 +35,7 @@ public class GroupChatClient implements Runnable
     private PrintWriter toSockWriter;
 
     // Constructor sets the reader and writer for the child thread
-    public GroupChatClient (BufferedReader reader, PrintWriter writer)
+    public GroupChatClient(BufferedReader reader, PrintWriter writer)
     {
         fromUserReader = reader;
         toSockWriter = writer;
@@ -52,10 +52,8 @@ public class GroupChatClient implements Runnable
                 String line = fromUserReader.readLine();
 
                 // If we get null, it means EOF, so quit
-                if (line == null) {
-                    System.out.println("*** Client closing connection");
+                if (line == null)
                     break;
-                }
 
                 // Write the line to the socket
                 toSockWriter.println(line);
@@ -102,8 +100,9 @@ public class GroupChatClient implements Runnable
             PrintWriter toSockWriter =
                     new PrintWriter(sock.getOutputStream(), true);
 
-            //display client name
+            // display client name
             toSockWriter.println(args[2]);
+
             // Prepare to read from keyboard
             BufferedReader fromUserReader = new BufferedReader(
                     new InputStreamReader(System.in));
@@ -111,6 +110,7 @@ public class GroupChatClient implements Runnable
             // Spawn a thread to read from user and write to socket
             Thread child = new Thread(
                     new GroupChatClient(fromUserReader, toSockWriter));
+
             child.start();
         }
         catch(Exception e) {
@@ -132,12 +132,12 @@ public class GroupChatClient implements Runnable
                 // If we get null, it means EOF
                 if (line == null) {
                     // Tell user server quit
-                    System.out.println("*** Server closed connection");
+                    System.out.println("*** Server quit");
                     break;
                 }
 
                 // Write the line to the user
-                System.out.println("Server: " + line);
+                System.out.println(line);
             }
         }
         catch(Exception e) {
